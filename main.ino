@@ -302,14 +302,37 @@ void loop()
 
 case STATE_RUNNING:
 {
+    // print state message
+    if (currentState != previousState)
+    {
+        U0putstring("State: RUNNING\n");
+        displayStateDateAndTime();
+        previousState = currentState;
+    }
+    // turn off green LED, turn on blue LED
+    *port_h &= ~(0x1 << 0);
+    *port_k |= (0x1 << 6);
+    // run fan called
+    if (dht.readTemperature() > 25)
+    {
+        // if runFan returns true, the water level is LOW
+        // enter ERROR state
+        if (runFan())
+        {
+            currentState = STATE_ERROR;
+        }
+    }
+    // return to IDLE
+    else
+    {
+        currentState = STATE_IDLE;
+    }
+    break;
+
+    case STATE_ERROR:
 
     break;
 }
-case STATE_ERROR:
-
-    break;
-}
-
 
 void U0init(int U0baud)
 {
