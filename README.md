@@ -1,4 +1,5 @@
 # CPE301-Final-Project
+group members: Nathan Wright
 
 This is a program for an Arduino-based water cooler control system. The system monitors temperature, humidity, and water level, and controls a fan and a vent to maintain optimal conditions. 
 
